@@ -1,0 +1,365 @@
+*{
+    padding: 0;
+    margin: 0;
+    font-family: "Roboto Mono", monospace;
+}
+
+body::-webkit-scrollbar{
+    width: 10px;
+    background-color: #000;
+}
+
+body::-webkit-scrollbar-thumb{
+    background-color: #FFF;
+    border-radius: 20px;
+}
+
+#mainContainer{
+    width: 100%;
+    height: 100%;
+    overflow-x: hidden;
+}
+
+.nav{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #000;    
+}
+
+.titleNav{
+    font-size: 30px;
+    padding: 30px;
+    color: #FFF;
+    text-decoration-line: overline;
+}
+
+.divAncor{
+    display: flex;
+    align-items: center;
+    width: 30%;
+    justify-content: space-between;
+    font-size: 20px;
+}
+
+.aNav{
+    cursor: pointer;
+    color: #FFF;
+    text-decoration: none;
+}
+
+.aNav:hover{
+    color: #FFF;
+    text-decoration-line: underline;
+}
+
+.iNav{
+    font-size: 30px;
+    padding: 30px;
+    color: #FFF;
+    cursor: pointer;
+}
+
+/*slideshow styles*/
+.divApresent{
+    width: 100%;
+    max-height: 750px;
+    overflow: hidden;
+}
+
+.imgApresent{
+    width: 100%;
+    object-fit: contain;
+    height: 100%;
+}
+
+.iSlideshow{
+    font-size: 50px;
+    color: #FFF;
+    position: absolute;
+    top: 42%;
+}
+
+.prev{
+    left: 0;
+    cursor: pointer;
+}
+
+.next{
+    right: 0;
+    cursor: pointer;
+}
+
+.iDots{
+    color: #FFF;
+}
+
+.iDot1{
+    bottom: 10%;
+    position: absolute;
+    font-size: 100px;
+    right: 50%;
+}
+
+.iDot2{
+    bottom: 10%;
+    position: absolute;
+    font-size: 100px;
+    right: 44%;
+}
+
+.iDot3{
+    bottom: 10%;
+    position: absolute;
+    font-size: 100px;
+    right: 38%;
+}
+
+.activeDot{
+    color: #727272;
+}
+
+.divInfos{
+    width: 100%;
+    height: 115px;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.divInfo{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#divFrete{
+    border-left: 1px solid black;
+    border-right: 1px solid black;
+    width: 30%;
+}
+
+.iconInfo{
+    font-size: 40px;
+}
+
+.divP{
+    padding-left: 20px;
+}
+
+.pInfoFirst{
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.pInfoSecond{
+    font-size: 14px;
+}
+
+.divProducts{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.divTypeProd{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 90%;
+    margin: 30px 0px;
+}
+
+.titleProds{
+    font-size: 30px;
+    font-weight: 700;
+    margin-bottom: 30px;
+}
+
+.divProdsCate{
+    display: flex;
+    align-items: center;
+    width: 100%;
+    justify-content: center;
+}
+
+.divProd{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px;
+    width: 30%;
+}
+
+.imgProd{
+    width: 300px;
+    height: 200px;
+    object-fit: contain;
+}
+
+.pTitleProd{
+    font-size: 18px;
+    font-weight: 700;
+    padding: 14px 0px;
+}
+
+.pPriceProd{
+    font-size: 16px;
+    padding: 10px 0px 5px 0px;
+}
+
+.pParceProd{
+    font-size: 14px;
+}
+
+.divTams{
+    display: flex;
+    align-items: center;
+    margin: 10px 0px;
+}
+
+.divTam{
+    border: 1px solid black;
+    margin: 0px 5px;
+    border-radius: 5px;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.divAddProd{
+    border: 1px solid black;
+    background-color: #000;
+    color: #FFF;
+    padding: 10px;
+    font-size: 14px;
+    margin: 20px 0px;
+    cursor: pointer;
+}
+
+.divAddProd:hover{
+    background-color: #727272;
+}
+
+.pVerMais{
+    border-bottom: 1px solid #000;
+    font-size: 16px;
+    padding: 5px;
+}
+
+.pVerMais:hover{
+    color: #FFF;
+    background-color: #000;
+}
+
+.footer{
+    width: 100%;
+    height: 400px;
+    background-color: #000;
+    position: relative;
+    bottom: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.map{
+    width: 40%;
+    height: 250px;
+    margin: 20px;
+}
+
+.divMap{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    width: 100%;
+}
+
+.video{
+    width: 40%;
+    height: 250px;
+    margin: 20px;
+}
+
+.divBottomFooter{
+    color: #FFF;
+    display: flex;
+    width: 90%;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 50px;
+    font-size: 25px;
+}
+
+.pFlexFooter{
+    text-decoration-line: overline;
+}
+
+.iSocial{
+    padding: 20px;
+    cursor: pointer;
+}
+
+/*Cart Styles*/
+.divCart{
+    width: 30%;
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 100%;
+    background-color: #EEE;
+    transition: all 1s linear;
+}
+
+.divCart header{
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.pCart{
+    font-size: 20px;
+}
+
+.iconX{
+    font-size: 50px;
+}
+
+.divProduct{
+    width: 100%;
+    height: 500px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+table{
+    border: 1px solid black;
+    width: 28%;
+    display: flex;
+    flex-direction: column;
+}
+
+tr{
+    border-bottom: 1px solid black;
+}
+
+th{
+    padding: 20px;
+}
+
+td{
+    padding: 25px;
+}
+
+.aInsta{
+    color: #FFF;
+}
