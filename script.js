@@ -52,6 +52,33 @@ let jsonClt = [
     },
 ];
 
+let jsonJkt = [
+    {
+        name: "Oakley x Piet Camiseta",
+        img: "./img/pietXoakley.webp",
+        price: "500,00",
+        tam: ["M", "G"]
+    },
+    {
+        name: "Camiseta BAPE ABC Big Ape",
+        img: "./img/bape.webp",
+        price: "450,00",
+        tam: ["P", "M", "G", "GG"]
+    },
+    {
+        name: "Camiseta Sufgang Basic 5.4 Azul",
+        img: "./img/sufgang.webp",
+        price: "120,00",
+        tam: ["P", "G", "XL"]
+    },
+    {
+        name: "Camiseta em Degradé Monogram LVSE",
+        img: "./img/lvCamisa.webp",
+        price: "6.750,00",
+        tam: ["P", "G"]
+    },
+];
+
 function createMainPage(){
     let mainContainer = document.getElementById("mainContainer");
 
@@ -313,6 +340,61 @@ function createMainPage(){
     pVerMaisClothes.classList.add("pVerMais");
     pVerMaisClothes.innerText = "Ver mais";
     divClothes.appendChild(pVerMaisClothes);
+
+    let divJkts = document.createElement("div");
+    divJkts.classList.add("divTypeProd");
+    divProducts.appendChild(divJkts);
+
+    let pJkt = document.createElement("p");
+    pJkt.classList.add("titleProds");
+    pJkt.innerText = "Jackets";
+    divJkts.appendChild(pJkt);
+
+    let divProdsJkt = document.createElement("div");
+    divProdsJkt.classList.add("divProdsCate");
+    divJkts.appendChild(divProdsJkt);
+
+    for(let i = 0; i < jsonJkt.length; i++){
+        let divJkt = document.createElement("div");
+        divJkt.classList.add("divProd");
+        divProdsJkt.appendChild(divJkt);
+
+        let img = document.createElement("img");
+        img.classList.add("imgProd");
+        img.src = jsonJkt[i].img;
+        divJkt.appendChild(img);
+
+        let pTitle = document.createElement("p");
+        pTitle.innerText = jsonJkt[i].name;
+        pTitle.classList.add("pTitleProd");
+        divJkt.appendChild(pTitle);
+
+        let pPrice = document.createElement("p");
+        pPrice.innerText = "R$ " + jsonJkt[i].price;
+        pPrice.classList.add("pPriceProd");
+        divJkt.appendChild(pPrice);
+
+        let divTams = document.createElement("div");
+        divTams.classList.add("divTams");
+        divJkt.appendChild(divTams);
+
+        for(let j in jsonJkt[i].tam){
+            let divTam = document.createElement("div");
+            divTam.classList.add("divTam");
+            divTam.innerText = jsonJkt[i].tam[j];
+            divTams.appendChild(divTam);
+        }
+
+        let divAddCart = document.createElement("div");
+        divAddCart.classList.add("divAddProd");
+        divAddCart.innerText = "Adicionar ao carrinho";
+        divJkt.appendChild(divAddCart);
+    }
+
+    let pVerMaisJkt = document.createElement("p");
+    pVerMaisJkt.classList.add("pVerMais");
+    pVerMaisJkt.innerText = "Ver mais";
+    divJkts.appendChild(pVerMaisJkt);
 
     let footer = document.createElement("footer");
     footer.classList.add("footer");
