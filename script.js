@@ -204,8 +204,10 @@ function createMainPage(){
         console.log("dots", dots);
         imgs.forEach((img, i) => {
             img.classList.toggle('active', i === index);  
-            //dots[i].classList.toggle('active', i === index);
         });
+        for(let j = 0; j < dots.length; j++){
+            dots[j].classList.toggle('active', j === index);
+        }
     }
 
     function changeSlide(direction) {
