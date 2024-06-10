@@ -54,33 +54,36 @@ let jsonClt = [
 
 let jsonJkt = [
     {
-        name: "Oakley x Piet Camiseta",
-        img: "./img/pietXoakley.webp",
+        name: "Jaqueta Jordan Jumpman Classics Black Red",
+        img: "./img/jordanJkt.webp",
         price: "500,00",
-        tam: ["M", "G"]
+        tam: ["M", "G", "GG"]
     },
     {
-        name: "Camiseta BAPE ABC Big Ape",
-        img: "./img/bape.webp",
-        price: "450,00",
-        tam: ["P", "M", "G", "GG"]
+        name: "Parka Esportiva com Color Blocking e Zíper",
+        img: "./img/lvJkt.png",
+        price: "23.000,00",
+        tam: ["P", "M"]
     },
     {
-        name: "Camiseta Sufgang Basic 5.4 Azul",
-        img: "./img/sufgang.webp",
-        price: "120,00",
+        name: "The North Face x Supreme Jaqueta Split Nuptse Black",
+        img: "./img/tnfJkt.webp",
+        price: "3.200,00",
         tam: ["P", "G", "XL"]
     },
     {
-        name: "Camiseta em Degradé Monogram LVSE",
-        img: "./img/lvCamisa.webp",
-        price: "6.750,00",
-        tam: ["P", "G"]
+        name: "Supreme x Nike Jaqueta Pullover Ripstop White",
+        img: "./img/nikeJkt.webp",
+        price: "3.800,00",
+        tam: ["P","M", "G"]
     },
 ];
 
 function createMainPage(){
     let mainContainer = document.getElementById("mainContainer");
+    while(mainContainer.firstChild){
+        mainContainer.removeChild(mainContainer.firstChild);
+    }
 
     let nav = document.createElement("nav");
     nav.classList.add("nav");
@@ -112,49 +115,110 @@ function createMainPage(){
     aJackets.innerText = "Jackets";
     divAncor.appendChild(aJackets);
 
+    let aDesafios = document.createElement("a");
+    aDesafios.classList.add("aNav");
+    aDesafios.innerText = "Cores";
+    divAncor.appendChild(aDesafios);
+    aDesafios.addEventListener("click", desafios);
+
+    let aGaleria = document.createElement("a");
+    aGaleria.classList.add("aNav");
+    aGaleria.innerText = "Galeria";
+    divAncor.appendChild(aGaleria);
+    aGaleria.addEventListener("click", galeria);
+
     let iCart = document.createElement("i");
     iCart.classList.add("bi", "bi-bag", "iNav");
     nav.appendChild(iCart);
     iCart.addEventListener("click", openCart);
 
-    let divImg = document.createElement("header");
-    divImg.classList.add("divApresent");
-    mainContainer.appendChild(divImg);
+    let divCarousel = document.createElement("header");
+    divCarousel.classList.add("carousel");
+    document.getElementById("mainContainer").appendChild(divCarousel);
 
-    let imgBackground = document.createElement("img");
-    imgBackground.src = "img/img1.jpg";
-    imgBackground.id = 1;
-    imgBackground.classList.add("imgApresent");
-    divImg.appendChild(imgBackground);
+    let divCarouselImgs = document.createElement("div");
+    divCarouselImgs.classList.add("carousel-images");
+    divCarousel.appendChild(divCarouselImgs);
 
-    let divSlideshow = document.createElement("div");
-    divSlideshow.classList.add("divSlideshow");
-    divImg.appendChild(divSlideshow);
+    let img1 = document.createElement("img");
+    img1.src = "./img/img1.jpg";
+    img1.alt = "Image 1";
+    img1.classList.add("active", "imgCarousel");
+    divCarouselImgs.appendChild(img1);
+
+    let img2 = document.createElement("img");
+    img2.src = "./img/img2.jpg";
+    img2.alt = "Image 2";
+    img2.classList.add("imgCarousel");
+    divCarouselImgs.appendChild(img2);
+
+    let img3 = document.createElement("img");
+    img3.src = "./img/img3.jpg";
+    img3.alt = "Image 3";
+    img3.classList.add("imgCarousel");
+    divCarouselImgs.appendChild(img3);
 
     let iArrowLeft = document.createElement("i");
     iArrowLeft.classList.add("bi", "bi-chevron-left", "iSlideshow", "prev");
-    divImg.appendChild(iArrowLeft);
-    iArrowLeft.addEventListener("click", prevImg);
+    divCarousel.appendChild(iArrowLeft);
+    iArrowLeft.addEventListener("click", function(){
+        changeSlide(-1);
+    });
 
     let iArrowRight = document.createElement("i");
     iArrowRight.classList.add("bi", "bi-chevron-right", "iSlideshow", "next");
-    divImg.appendChild(iArrowRight);
-    iArrowRight.addEventListener("click", nextImg);
+    divCarousel.appendChild(iArrowRight);
+    iArrowRight.addEventListener("click", function(){
+        changeSlide(1);
+    });
 
-    let dot1 = document.createElement("i");
-    dot1.classList.add("bi", "bi-dot", "iDot1", "iDots", "activeDot");
-    dot1.id = 1;
-    divImg.appendChild(dot1);
+    let divDots = document.createElement("div");
+    divDots.classList.add("dots");
+    divCarousel.appendChild(divDots);
 
-    let dot2 = document.createElement("i");
-    dot2.classList.add("bi", "bi-dot", "iDot2", "iDots");
-    dot2.id = 2;
-    divImg.appendChild(dot2);
+    let dot1 = document.createElement("span");
+    dot1.classList.add("bi", "bi-dot", "iDots");
+    dot1.setAttribute("id", "dot");
+    divDots.appendChild(dot1);
+    dot1.addEventListener("change", currentSlide(0));
 
-    let dot3 = document.createElement("i");
-    dot3.classList.add("bi", "bi-dot", "iDot3", "iDots");
-    dot3.id = 3;
-    divImg.appendChild(dot3);
+    let dot2 = document.createElement("span");
+    dot2.classList.add("bi", "bi-dot", "iDots");
+    dot2.setAttribute("id", "dot");
+    divDots.appendChild(dot2);
+    dot2.addEventListener("change", currentSlide(1));
+
+    let dot3 = document.createElement("span");
+    dot3.classList.add("bi", "bi-dot", "iDots");
+    dot3.setAttribute("id", "dot");
+    divDots.appendChild(dot3);
+    dot3.addEventListener("change", currentSlide(2));
+
+    var currentIndex = 0;
+    const images = document.querySelectorAll(".imgCarousel");
+    console.log("images2", images)
+
+    function showSlide(index) {
+        const imgs = document.querySelectorAll(".imgCarousel");
+        const dots = document.querySelectorAll("#dot");
+        console.log("dots", dots);
+        imgs.forEach((img, i) => {
+            img.classList.toggle('active', i === index);  
+            //dots[i].classList.toggle('active', i === index);
+        });
+    }
+
+    function changeSlide(direction) {
+        currentIndex = (currentIndex + direction + images.length) % images.length;
+        showSlide(currentIndex);
+    }
+
+    function currentSlide(index) {
+        currentIndex = index;
+        showSlide(currentIndex);
+    }
+
+    showSlide(currentIndex);
 
     let divInfos = document.createElement("div");
     divInfos.classList.add("divInfos");
@@ -447,63 +511,7 @@ function createMainPage(){
 
 }
 
-const images = [
-    {img: "img/img1.jpg", id: "1"},
-    {img: "img/img2.jpg", id: "2"},
-    {img: "img/img3.jpg", id: "3"}
-];
-
-function nextImg(){
-    let img = document.querySelector(".imgApresent");
-    let currentIndex = img.id - 1;
-    console.log("iamges", images);
-
-    let dots = document.querySelectorAll(".iDots");
-    for(let i = 0; i < dots.length; i++){
-        if(dots[i].id == currentIndex + 1){
-            console.log("dot", dots[i]);
-            let dotAtivo = document.querySelector(".activeDot");
-            dotAtivo.classList.remove("activeDot");
-            dots[i].classList.add("activeDot");
-        }
-    }
-
-    if(currentIndex + 1 < images.length){
-        img.src = images[currentIndex + 1].img;
-        img.id = images[currentIndex + 1].id
-    }else{
-        currentIndex = 1;
-        img.src = images[currentIndex - 1].img;
-        img.id = images[currentIndex - 1].id;
-    }
-}
-
-function prevImg(){
-    let img = document.querySelector(".imgApresent");
-    let currentIndex = img.id - 1;
-
-    let dots = document.querySelectorAll(".iDots");
-    for(let i = 0; i < dots.length; i++){
-        if(dots[i].id == currentIndex + 1){
-            console.log("dot", dots[i]);
-            let dotAtivo = document.querySelector(".activeDot");
-            dotAtivo.classList.remove("activeDot");
-            dots[i].classList.add("activeDot");
-        }
-    }
-
-    if(currentIndex - 1 >= 0){
-        img.src = images[currentIndex - 1].img;
-        img.id = images[currentIndex - 1].id;
-    }else{
-        currentIndex = 3;
-        img.src = images[currentIndex - 1].img;
-        img.id = images[currentIndex - 1].id;
-    }
-
-}
-
-
+createMainPage();
 
 function openCart() {
     let divCart = document.createElement("div");
@@ -525,8 +533,646 @@ function openCart() {
         if(divCart){
             divCart.remove();
         }
-
     });
 }
 
-createMainPage();
+function desafios(){
+    const mainContainer = document.getElementById("mainContainer");
+    while(mainContainer.firstChild){
+        mainContainer.removeChild(mainContainer.firstChild);
+    }
+    let nav = document.createElement("nav");
+    nav.classList.add("nav");
+    mainContainer.appendChild(nav);
+
+    let titleNav = document.createElement("p");
+    titleNav.innerText = "Flex";
+    titleNav.classList.add("titleNav");
+    nav.appendChild(titleNav);
+    titleNav.addEventListener("click", createMainPage);
+
+    let divAncor = document.createElement("div");
+    divAncor.classList.add("divAncor");
+    nav.appendChild(divAncor);
+
+    let aSneakers = document.createElement("a");
+    aSneakers.classList.add("aNav");
+    aSneakers.href = "emDesenvolvimento.html";
+    aSneakers.target = "_blank";
+    aSneakers.innerText = "Sneakers";
+    divAncor.appendChild(aSneakers);
+
+    let aClothes = document.createElement("a");
+    aClothes.classList.add("aNav");
+    aClothes.innerText = "Clothes";
+    divAncor.appendChild(aClothes);
+
+    let aJackets = document.createElement("a");
+    aJackets.classList.add("aNav");
+    aJackets.innerText = "Jackets";
+    divAncor.appendChild(aJackets);
+
+    let aDesafios = document.createElement("a");
+    aDesafios.classList.add("aNav");
+    aDesafios.innerText = "Cores";
+    divAncor.appendChild(aDesafios);
+    aDesafios.addEventListener("click", desafios);
+
+    let aGaleria = document.createElement("a");
+    aGaleria.classList.add("aNav");
+    aGaleria.innerText = "Galeria";
+    divAncor.appendChild(aGaleria);
+    aGaleria.addEventListener("click", galeria);
+
+    let iCart = document.createElement("i");
+    iCart.classList.add("bi", "bi-bag", "iNav");
+    nav.appendChild(iCart);
+    iCart.addEventListener("click", openCart);
+
+    let jsonCores = [
+        {
+            color: "vermelho",
+            background: "red",
+            textColor: "#FFF" 
+        },
+        {
+            color: "azul",
+            background: "blue",
+            textColor: "#000" 
+        },
+        {
+            color: "branco",
+            background: "white",
+            textColor: "#000" 
+        },
+        {
+            color: "verde",
+            background: "green",
+            textColor: "#FFF" 
+        },
+        {
+            color: "preto",
+            background: "#000",
+            textColor: "#FFF" 
+        },
+        {
+            color: "rosa",
+            background: "pink",
+            textColor: "#FFF" 
+        }
+    ];
+
+    let divBtns = document.createElement("div");
+    divBtns.classList.add("divBtns");
+    mainContainer.appendChild(divBtns);
+
+    for(let i = 0; i < jsonCores.length; i++){
+        let btn = document.createElement("button");
+        btn.innerText = jsonCores[i].color;
+        btn.style.backgroundColor = jsonCores[i].background;
+        btn.classList.add("btnColor");
+        btn.style.color = jsonCores[i].textColor;
+        divBtns.appendChild(btn);
+        btn.addEventListener("click", changeColor.bind(jsonCores[i]));
+    }
+
+    function changeColor(){
+        console.log("i", this)
+        mainContainer.style.backgroundColor = this.background;
+        mainContainer.style.color = this.textColor;
+    }
+
+    let btnPerso = document.createElement("btn");
+    btnPerso.classList.add("btnColor");
+    btnPerso.innerText = "Personalizar";
+    btnPerso.style.backgroundColor = "#000";
+    btnPerso.style.color = "#FFF";
+    divBtns.appendChild(btnPerso);
+    btnPerso.addEventListener("click", personalizar);
+
+    function personalizar(){
+        const persoExist = document.querySelector(".divPerso");
+        if(persoExist){
+            persoExist.remove();
+        }
+
+        let divPerso = document.createElement("div");
+        divPerso.classList.add("divPerso");
+        mainContainer.appendChild(divPerso);
+
+        let divBtnsPerso = document.createElement("div");
+        divBtnsPerso.classList.add("divBtnsPerso");
+        divPerso.appendChild(divBtnsPerso);
+
+        let rgb = document.createElement("button");
+        rgb.classList.add("btnPerso");
+        rgb.innerText = "RGB";
+        divBtnsPerso.appendChild(rgb);
+        rgb.addEventListener("click", openRgb);
+
+        let hex = document.createElement("button");
+        hex.classList.add("btnPerso");
+        hex.innerText = "HEX";
+        divBtnsPerso.appendChild(hex);
+        hex.addEventListener("click", openHex);
+
+        let hsl = document.createElement("button");
+        hsl.classList.add("btnPerso");
+        hsl.innerText = "HSL";
+        divBtnsPerso.appendChild(hsl);
+        hsl.addEventListener("click", openHsl);
+
+        let divColorPick = document.createElement("div");
+        divColorPick.classList.add("divColorPick");
+        divPerso.appendChild(divColorPick);
+
+        function openRgb(){
+            while(divColorPick.firstChild){
+                divColorPick.removeChild(divColorPick.firstChild);
+            }
+
+            let title = document.createElement("p");
+            title.innerText = "Rgb Color Picker";
+            divColorPick.appendChild(title);
+
+            let divRgb = document.createElement("div");
+            divRgb.classList.add("divShowResult");
+            divColorPick.appendChild(divRgb);
+
+            let pRgb = document.createElement("p");
+            pRgb.innerText = "Rgb(0,0,0)";
+            divRgb.appendChild(pRgb);
+
+            let divSliders = document.createElement("div");
+            divSliders.classList.add("divSliders");
+            divColorPick.appendChild(divSliders);
+
+            let divRed = document.createElement("div");
+            divRed.classList.add("divPick");
+            divSliders.appendChild(divRed);
+
+            let labelRed = document.createElement("label");
+            labelRed.innerText = "Red";
+            labelRed.setAttribute("for", "red");
+            divRed.appendChild(labelRed);
+
+            let inputRed = document.createElement("input");
+            inputRed.type = "range";
+            inputRed.id = "red";
+            inputRed.name = "red";
+            inputRed.min = "0";
+            inputRed.max = "255";
+            inputRed.value = "0";
+            divRed.appendChild(inputRed);
+            inputRed.addEventListener("input", function(){
+                pShowRed.innerText = inputRed.value;
+                updateColor();
+            });
+
+            var pShowRed = document.createElement("p");
+            pShowRed.innerText = "0";
+            divRed.appendChild(pShowRed);
+            
+            let divGreen = document.createElement("div");
+            divGreen.classList.add("divPick");
+            divSliders.appendChild(divGreen);
+
+            let labelGreen = document.createElement("label");
+            labelGreen.innerText = "Green";
+            labelGreen.setAttribute("for", "green");
+            divGreen.appendChild(labelGreen);
+
+            let inputGreen = document.createElement("input");
+            inputGreen.type = "range";
+            inputGreen.id = "green";
+            inputGreen.name = "green";
+            inputGreen.min = "0";
+            inputGreen.max = "255";
+            inputGreen.value = "0";
+            divGreen.appendChild(inputGreen);
+            inputGreen.addEventListener("input", function(){
+                pShowGreen.innerText = inputGreen.value;
+                updateColor();
+            });
+
+            var pShowGreen = document.createElement("p");
+            pShowGreen.innerText = "0";
+            divGreen.appendChild(pShowGreen);
+
+            let divYellow = document.createElement("div");
+            divYellow.classList.add("divPick");
+            divSliders.appendChild(divYellow);
+
+            let labelYellow = document.createElement("label");
+            labelYellow.innerText = "Yellow";
+            labelYellow.setAttribute("for", "Yellow");
+            divYellow.appendChild(labelYellow);
+
+            let inputYellow = document.createElement("input");
+            inputYellow.type = "range";
+            inputYellow.id = "yellow";
+            inputYellow.name = "yellow";
+            inputYellow.min = "0";
+            inputYellow.max = "255";
+            inputYellow.value = "0";
+            divYellow.appendChild(inputYellow);
+            inputYellow.addEventListener("input", function(){
+                pShowYellow.innerText = inputYellow.value;
+                updateColor();
+            });
+
+            var pShowYellow = document.createElement("p");
+            pShowYellow.innerText = "0";
+            divYellow.appendChild(pShowYellow);
+
+            let rgbColor = 0;
+
+            function updateColor(){
+                const red = inputRed.value;
+                const green = inputGreen.value;
+                const yellow = inputYellow.value;
+                rgbColor = `rgb(${red}, ${green}, ${yellow})`
+
+                divRgb.style.backgroundColor = rgbColor;
+                pRgb.innerText = rgbColor;
+
+            }
+
+            let btnApply = document.createElement("button");
+            btnApply.innerText = "Apply";
+            btnApply.classList.add("btnApply");
+            divColorPick.appendChild(btnApply);
+            btnApply.addEventListener("click", function(){
+                mainContainer.style.backgroundColor = rgbColor;
+            });
+
+        }
+
+        function openHex(){
+            while(divColorPick.firstChild){
+                divColorPick.removeChild(divColorPick.firstChild);
+            }
+
+            let title = document.createElement("p");
+            title.innerText = "HEX Color Picker";
+            divColorPick.appendChild(title);
+
+            let divHex = document.createElement("div");
+            divHex.classList.add("divShowResult");
+            divColorPick.appendChild(divHex);
+
+            let pHex = document.createElement("p");
+            pHex.innerText = "#FFFFFF";
+            divHex.appendChild(pHex);
+
+            let divSliders = document.createElement("div");
+            divSliders.classList.add("divSliders");
+            divColorPick.appendChild(divSliders);
+
+            let divRed = document.createElement("div");
+            divRed.classList.add("divPick");
+            divSliders.appendChild(divRed);
+
+            let labelRed = document.createElement("label");
+            labelRed.innerText = "Red";
+            labelRed.setAttribute("for", "red");
+            divRed.appendChild(labelRed);
+
+            let inputRed = document.createElement("input");
+            inputRed.type = "range";
+            inputRed.id = "red";
+            inputRed.name = "red";
+            inputRed.min = "0";
+            inputRed.max = "255";
+            inputRed.value = "0";
+            divRed.appendChild(inputRed);
+            inputRed.addEventListener("input", function(){
+                pShowRed.innerText = inputRed.value;
+                updateColor();
+            });
+
+            var pShowRed = document.createElement("p");
+            pShowRed.innerText = "0";
+            divRed.appendChild(pShowRed);
+            
+            let divGreen = document.createElement("div");
+            divGreen.classList.add("divPick");
+            divSliders.appendChild(divGreen);
+
+            let labelGreen = document.createElement("label");
+            labelGreen.innerText = "Green";
+            labelGreen.setAttribute("for", "green");
+            divGreen.appendChild(labelGreen);
+
+            let inputGreen = document.createElement("input");
+            inputGreen.type = "range";
+            inputGreen.id = "green";
+            inputGreen.name = "green";
+            inputGreen.min = "0";
+            inputGreen.max = "255";
+            inputGreen.value = "0";
+            divGreen.appendChild(inputGreen);
+            inputGreen.addEventListener("input", function(){
+                pShowGreen.innerText = inputGreen.value;
+                updateColor();
+            });
+
+            var pShowGreen = document.createElement("p");
+            pShowGreen.innerText = "0";
+            divGreen.appendChild(pShowGreen);
+
+            let divYellow = document.createElement("div");
+            divYellow.classList.add("divPick");
+            divSliders.appendChild(divYellow);
+
+            let labelYellow = document.createElement("label");
+            labelYellow.innerText = "Yellow";
+            labelYellow.setAttribute("for", "Yellow");
+            divYellow.appendChild(labelYellow);
+
+            let inputYellow = document.createElement("input");
+            inputYellow.type = "range";
+            inputYellow.id = "yellow";
+            inputYellow.name = "yellow";
+            inputYellow.min = "0";
+            inputYellow.max = "255";
+            inputYellow.value = "0";
+            divYellow.appendChild(inputYellow);
+            inputYellow.addEventListener("input", function(){
+                pShowYellow.innerText = inputYellow.value;
+                updateColor();
+            });
+
+            var pShowYellow = document.createElement("p");
+            pShowYellow.innerText = "0";
+            divYellow.appendChild(pShowYellow);
+
+            let hexColor;
+            
+            function componentToHex(c) {
+                const hex = c.toString(16);
+                return hex.length == 1 ? "0" + hex : hex;
+            }
+            
+            function rgbToHex(r, g, b) {
+                return "#" + componentToHex(r) + componentToHex(g) + componentToHex(b);
+            }
+
+            function updateColor(){
+                const red = parseInt(inputRed.value);
+                const green = parseInt(inputGreen.value);
+                const yellow = parseInt(inputYellow.value);
+                hexColor = rgbToHex(red, green, yellow);
+
+                divHex.style.backgroundColor = hexColor;
+                pHex.innerText = hexColor;
+
+            }
+
+            let btnApply = document.createElement("button");
+            btnApply.innerText = "Apply";
+            btnApply.classList.add("btnApply");
+            divColorPick.appendChild(btnApply);
+            btnApply.addEventListener("click", function(){
+                mainContainer.style.backgroundColor = hexColor;
+            });
+        }
+
+        function openHsl(){
+            while(divColorPick.firstChild){
+                divColorPick.removeChild(divColorPick.firstChild);
+            }
+
+            let title = document.createElement("p");
+            title.innerText = "Rgb Color Picker";
+            divColorPick.appendChild(title);
+
+            let divHsl = document.createElement("div");
+            divHsl.classList.add("divShowResult");
+            divColorPick.appendChild(divHsl);
+
+            let pHsl = document.createElement("p");
+            pHsl.innerText = "Rgb(0,0,0)";
+            divHsl.appendChild(pHsl);
+
+            let divSliders = document.createElement("div");
+            divSliders.classList.add("divSliders");
+            divColorPick.appendChild(divSliders);
+
+            let divHue = document.createElement("div");
+            divHue.classList.add("divPick");
+            divSliders.appendChild(divHue);
+
+            let labelHue = document.createElement("label");
+            labelHue.innerText = "Hue";
+            labelHue.setAttribute("for", "Hue");
+            divHue.appendChild(labelHue);
+
+            let inputHue = document.createElement("input");
+            inputHue.type = "range";
+            inputHue.id = "hue";
+            inputHue.name = "hue";
+            inputHue.min = "0";
+            inputHue.max = "360";
+            inputHue.value = "0";
+            divHue.appendChild(inputHue);
+            inputHue.addEventListener("input", function(){
+                pShowHue.innerText = inputHue.value;
+                updateColor();
+            });
+
+            var pShowHue = document.createElement("p");
+            pShowHue.innerText = "0";
+            divHue.appendChild(pShowHue);
+            
+            let divSatu = document.createElement("div");
+            divSatu.classList.add("divPick");
+            divSliders.appendChild(divSatu);
+
+            let labelSatu = document.createElement("label");
+            labelSatu.innerText = "Saturation";
+            labelSatu.setAttribute("for", "saturation");
+            divSatu.appendChild(labelSatu);
+
+            let inputSatu = document.createElement("input");
+            inputSatu.type = "range";
+            inputSatu.id = "saturation";
+            inputSatu.name = "saturation";
+            inputSatu.min = "0";
+            inputSatu.max = "100";
+            inputSatu.value = "100";
+            divSatu.appendChild(inputSatu);
+            inputSatu.addEventListener("input", function(){
+                pShowSatu.innerText = inputSatu.value;
+                updateColor();
+            });
+
+            var pShowSatu = document.createElement("p");
+            pShowSatu.innerText = "100";
+            divSatu.appendChild(pShowSatu);
+
+            let divLight = document.createElement("div");
+            divLight.classList.add("divPick");
+            divSliders.appendChild(divLight);
+
+            let labelLight = document.createElement("label");
+            labelLight.innerText = "Lightness";
+            labelLight.setAttribute("for", "light");
+            divLight.appendChild(labelLight);
+
+            let inputLight = document.createElement("input");
+            inputLight.type = "range";
+            inputLight.id = "light";
+            inputLight.name = "light";
+            inputLight.min = "0";
+            inputLight.max = "100";
+            inputLight.value = "50";
+            divLight.appendChild(inputLight);
+            inputLight.addEventListener("input", function(){
+                pShowLight.innerText = inputLight.value;
+                updateColor();
+            });
+
+            var pShowLight = document.createElement("p");
+            pShowLight.innerText = "50";
+            divLight.appendChild(pShowLight);
+
+            let hslColor;
+
+            function updateColor(){
+                const hue = inputHue.value;
+                const saturation = inputSatu.value;
+                const lightness = inputLight.value;
+                hslColor = `hsl(${hue}, ${saturation}%, ${lightness}%)`
+
+                divHsl.style.backgroundColor = hslColor;
+                pHsl.innerText = hslColor;
+
+            }
+
+            let btnApply = document.createElement("button");
+            btnApply.innerText = "Apply";
+            btnApply.classList.add("btnApply");
+            divColorPick.appendChild(btnApply);
+            btnApply.addEventListener("click", function(){
+                mainContainer.style.backgroundColor = hslColor;
+            });
+        }
+    }
+
+}
+
+function galeria(){
+    const mainContainer = document.getElementById("mainContainer");
+    while(mainContainer.firstChild){
+        mainContainer.removeChild(mainContainer.firstChild);
+    }
+
+    let nav = document.createElement("nav");
+    nav.classList.add("nav");
+    mainContainer.appendChild(nav);
+
+    let titleNav = document.createElement("p");
+    titleNav.innerText = "Flex";
+    titleNav.classList.add("titleNav");
+    nav.appendChild(titleNav);
+    titleNav.addEventListener("click", createMainPage);
+
+    let divAncor = document.createElement("div");
+    divAncor.classList.add("divAncor");
+    nav.appendChild(divAncor);
+
+    let aSneakers = document.createElement("a");
+    aSneakers.classList.add("aNav");
+    aSneakers.href = "emDesenvolvimento.html";
+    aSneakers.target = "_blank";
+    aSneakers.innerText = "Sneakers";
+    divAncor.appendChild(aSneakers);
+
+    let aClothes = document.createElement("a");
+    aClothes.classList.add("aNav");
+    aClothes.innerText = "Clothes";
+    divAncor.appendChild(aClothes);
+
+    let aJackets = document.createElement("a");
+    aJackets.classList.add("aNav");
+    aJackets.innerText = "Jackets";
+    divAncor.appendChild(aJackets);
+
+    let aDesafios = document.createElement("a");
+    aDesafios.classList.add("aNav");
+    aDesafios.innerText = "Cores";
+    divAncor.appendChild(aDesafios);
+    aDesafios.addEventListener("click", desafios);
+
+    let aGaleria = document.createElement("a");
+    aGaleria.classList.add("aNav");
+    aGaleria.innerText = "Galeria";
+    divAncor.appendChild(aGaleria);
+    aGaleria.addEventListener("click", galeria);
+
+    let iCart = document.createElement("i");
+    iCart.classList.add("bi", "bi-bag", "iNav");
+    nav.appendChild(iCart);
+    iCart.addEventListener("click", openCart);
+
+    let divGaleria = document.createElement("div");
+    divGaleria.classList.add("divGaleria");
+    mainContainer.appendChild(divGaleria);
+
+    let iArrowLeft = document.createElement("i");
+    iArrowLeft.classList.add("bi", "bi-chevron-left", "arrow");
+    divGaleria.appendChild(iArrowLeft);
+
+    let divImgs = document.createElement("div");
+    divImgs.classList.add("imagesGaleria");
+    divImgs.id = "imagesGaleria";
+    divGaleria.appendChild(divImgs);
+
+    let iArrowRight = document.createElement("i");
+    iArrowRight.classList.add("bi", "bi-chevron-right", "arrow");
+    divGaleria.appendChild(iArrowRight);
+
+    const images = [
+        { src: './img/jordanJkt.webp', desc: 'Jaqueta Jordan Jumpman' },
+        { src: './img/lamelo.webp', desc: 'Puma MB.01 LaMelo Red Blast' },
+        { src: './img/lebron.webp', desc: 'Nike Lebron 21 Aragonite' },
+        { src: './img/lvCamisa.webp', desc: 'Camiseta em Degradé Monogram LVSE' },
+        { src: './img/noctaJkt.webp', desc: 'Jaqueta Nocta' },
+        { src: './img/nikeJkt.webp', desc: 'Supreme x Nike Jaqueta Pullover' },
+        { src: './img/pietXoakley.webp', desc: 'Oakley x Piet Camiseta' },
+        { src: './img/sufgang.webp', desc: 'Camiseta Sufgang Basic 5.4 Azul' },
+        { src: './img/tnfJkt.webp', desc: 'The North Face x Supreme Jaqueta' },
+        { src: './img/noctaHotStep.webp', desc: 'NOCTA x Nike Hot Step 2' }
+    ];
+
+    let currentIndex = 0;
+
+    function renderImages() {
+        divImgs.innerHTML = '';
+        for (let i = 0; i < 4; i++) {
+            const imgIndex = (currentIndex + i) % images.length;
+            const imageContainer = document.createElement('div');
+            imageContainer.classList.add('image-container');
+            if (i === 1 || i === 2) {
+                imageContainer.classList.add('center');
+            }
+            imageContainer.innerHTML = `
+                <img src="${images[imgIndex].src}" alt="Image ${imgIndex + 1}">
+                <div class="description">${images[imgIndex].desc}</div>
+            `;
+            divImgs.appendChild(imageContainer);
+            imageContainer.addEventListener('click', () => shiftImages(i < 2 ? -1 : 1));
+        }
+    }
+
+    function shiftImages(direction) {
+        currentIndex = (currentIndex + direction + images.length) % images.length;
+        renderImages();
+    }
+    
+    iArrowLeft.addEventListener('click', () => shiftImages(-1));
+    iArrowRight.addEventListener('click', () => shiftImages(1));
+    
+    renderImages();
+}
