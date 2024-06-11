@@ -946,7 +946,7 @@ function desafios(){
             }
 
             let title = document.createElement("p");
-            title.innerText = "Rgb Color Picker";
+            title.innerText = "Hsl Color Picker";
             divColorPick.appendChild(title);
 
             let divHsl = document.createElement("div");
@@ -954,7 +954,7 @@ function desafios(){
             divColorPick.appendChild(divHsl);
 
             let pHsl = document.createElement("p");
-            pHsl.innerText = "Rgb(0,0,0)";
+            pHsl.innerText = "Hsl(0,0,0)";
             divHsl.appendChild(pHsl);
 
             let divSliders = document.createElement("div");
