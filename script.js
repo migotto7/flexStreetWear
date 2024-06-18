@@ -100,22 +100,23 @@ function createMainPage(){
 
     let aSneakers = document.createElement("a");
     aSneakers.classList.add("aNav");
-    aSneakers.href = "emDesenvolvimento.html";
-    aSneakers.target = "_blank";
+    aSneakers.href = "#divSneakers";
     aSneakers.innerText = "Sneakers";
     divAncor.appendChild(aSneakers);
 
     let aClothes = document.createElement("a");
     aClothes.classList.add("aNav");
     aClothes.innerText = "Clothes";
+    aClothes.href = "#divClothes";
     divAncor.appendChild(aClothes);
 
     let aJackets = document.createElement("a");
     aJackets.classList.add("aNav");
     aJackets.innerText = "Jackets";
+    aJackets.href = "#divJackets";
     divAncor.appendChild(aJackets);
 
-    let aDesafios = document.createElement("a");
+    /*let aDesafios = document.createElement("a");
     aDesafios.classList.add("aNav");
     aDesafios.innerText = "Cores";
     divAncor.appendChild(aDesafios);
@@ -125,7 +126,7 @@ function createMainPage(){
     aGaleria.classList.add("aNav");
     aGaleria.innerText = "Galeria";
     divAncor.appendChild(aGaleria);
-    aGaleria.addEventListener("click", galeria);
+    aGaleria.addEventListener("click", galeria);*/
 
     let iCart = document.createElement("i");
     iCart.classList.add("bi", "bi-bag", "iNav");
@@ -299,6 +300,7 @@ function createMainPage(){
 
     let divSneakers = document.createElement("div");
     divSneakers.classList.add("divTypeProd");
+    divSneakers.id = "divSneakers";
     divProducts.appendChild(divSneakers);
 
     let pSneaker = document.createElement("p");
@@ -339,12 +341,15 @@ function createMainPage(){
             divTam.classList.add("divTam");
             divTam.innerText = jsonSnk[i].tam[j];
             divTams.appendChild(divTam);
+            divTam.addEventListener("click", selectTam);
         }
 
         let divAddCart = document.createElement("div");
         divAddCart.classList.add("divAddProd");
         divAddCart.innerText = "Adicionar ao carrinho";
         divSneaker.appendChild(divAddCart);
+        divAddCart.addEventListener("click", addCart.bind(this, jsonSnk[i], divTams));
+
     }
 
     let pVerMais = document.createElement("p");
@@ -354,6 +359,7 @@ function createMainPage(){
 
     let divClothes = document.createElement("div");
     divClothes.classList.add("divTypeProd");
+    divClothes.id = "divClothes";
     divProducts.appendChild(divClothes);
 
     let pCloth = document.createElement("p");
@@ -394,12 +400,15 @@ function createMainPage(){
             divTam.classList.add("divTam");
             divTam.innerText = jsonClt[i].tam[j];
             divTams.appendChild(divTam);
+            divTam.addEventListener("click", selectTam);
         }
 
         let divAddCart = document.createElement("div");
         divAddCart.classList.add("divAddProd");
         divAddCart.innerText = "Adicionar ao carrinho";
         divCloth.appendChild(divAddCart);
+        divAddCart.addEventListener("click", addCart.bind(this, jsonClt[i], divTams));
+
     }
 
     let pVerMaisClothes = document.createElement("p");
@@ -409,6 +418,7 @@ function createMainPage(){
 
     let divJkts = document.createElement("div");
     divJkts.classList.add("divTypeProd");
+    divJkts.id = "divJackets";
     divProducts.appendChild(divJkts);
 
     let pJkt = document.createElement("p");
@@ -442,6 +452,7 @@ function createMainPage(){
 
         let divTams = document.createElement("div");
         divTams.classList.add("divTams");
+        divTams.id = "jkt";
         divJkt.appendChild(divTams);
 
         for(let j in jsonJkt[i].tam){
@@ -449,12 +460,14 @@ function createMainPage(){
             divTam.classList.add("divTam");
             divTam.innerText = jsonJkt[i].tam[j];
             divTams.appendChild(divTam);
+            divTam.addEventListener("click", selectTam);
         }
 
         let divAddCart = document.createElement("div");
         divAddCart.classList.add("divAddProd");
         divAddCart.innerText = "Adicionar ao carrinho";
         divJkt.appendChild(divAddCart);
+        divAddCart.addEventListener("click", addCart.bind(this, jsonJkt[i], divTams));
     }
 
     let pVerMaisJkt = document.createElement("p");
@@ -516,6 +529,7 @@ function createMainPage(){
 createMainPage();
 
 function openCart() {
+    console.log("prodCarrinho",jsonCart)
     let divCart = document.createElement("div");
     divCart.classList.add("divCart");
     document.getElementById("mainContainer").appendChild(divCart);
@@ -536,9 +550,155 @@ function openCart() {
             divCart.remove();
         }
     });
+
+    let divProds = document.createElement("div");
+    divProds.classList.add("divProdsCart");
+    divCart.appendChild(divProds);
+
+    for(let i = 0; i < jsonCart.length; i++){
+        let divProd = document.createElement("div");
+        divProd.classList.add("divProdCart");
+        divProds.appendChild(divProd);
+
+        let divImg = document.createElement("div");
+        divProd.appendChild(divImg);
+
+        let img = document.createElement("img");
+        img.src = jsonCart[i].prod.img;
+        img.classList.add("imgCart");
+        divImg.appendChild(img);
+
+        let divInfosCart = document.createElement("div");
+        divInfosCart.classList.add("divInfosCart");
+        divProd.appendChild(divInfosCart);
+
+        let pName = document.createElement("p");
+        pName.innerText = jsonCart[i].prod.name;
+        pName.classList.add("pNameCart");
+        divInfosCart.appendChild(pName);
+
+        let pTam = document.createElement("p");
+        pTam.innerText = "Tamanho " + jsonCart[i].tamSelected;
+        pTam.classList.add("pTamCart");
+        divInfosCart.appendChild(pTam);
+
+        let divPriceAdd = document.createElement("div");
+        divPriceAdd.classList.add("divPriceAdd");
+        divInfosCart.appendChild(divPriceAdd);
+
+        let pPreco = document.createElement("p");
+        pPreco.innerText = "R$ " + jsonCart[i].prod.price;
+        pPreco.classList.add("pPrecoProdCart");
+        divPriceAdd.appendChild(pPreco);
+
+        let divAdd = document.createElement("div");
+        divAdd.classList.add("divAddCart");
+        divPriceAdd.appendChild(divAdd);
+
+        let iconLess = document.createElement("i");
+        iconLess.classList.add("bi", "bi-trash3", "iconAddCart");
+        divAdd.appendChild(iconLess);
+
+        var number = document.createElement("span");
+        number.innerText = 1;
+        if(number == 1){
+            iconLess.classList.add("bi", "bi-trash3", "iconAddCart");
+        }
+        number.setAttribute("class", "numberAddCart");
+        divAdd.appendChild(number);
+
+        let iconPlus = document.createElement("i");
+        iconPlus.setAttribute("class", "bi bi-plus iconAddCart");
+        divAdd.appendChild(iconPlus);
+
+        iconLess.addEventListener("click", function(){  
+            let numberString = this.parentNode.children[1].innerText;
+            numberString = Number(numberString);
+            let num = numberString;
+            if(numberString > 1){
+                num--;
+                this.parentNode.children[1].innerText = num;
+            }else{
+                this.parentNode.parentNode.parentNode.parentNode.remove();
+                let position = i;
+                jsonCart.splice(position, 1);
+            }
+            if(this.parentNode.children[1].innerText > 1){
+                iconLess.classList.remove("bi-trash3");
+                iconLess.classList.add("bi-dash");
+            }else if(this.parentNode.children[1].innerText == 1){
+                iconLess.classList.remove("bi-dash");
+                iconLess.classList.add("bi-trash3");
+            }
+        });
+    
+        iconPlus.addEventListener("click", function(){
+            let number = this.parentNode.children[1].innerText;
+            number = Number(number);
+            let num = number;
+            num++;
+            this.parentNode.children[1].innerText = num;
+            if(this.parentNode.children[1].innerText > 1){
+                iconLess.classList.remove("bi-trash3");
+                iconLess.classList.add("bi-dash");
+            }else if(this.parentNode.children[1].innerText == 1){
+                iconLess.classList.remove("bi-dash");
+                iconLess.classList.add("bi-trash3");
+            }
+        });
+    }
+    let footerCart = document.createElement("footer");
+    footerCart.classList.add("footerCart");
+    divCart.appendChild(footerCart);
+    if(jsonCart.length > 0){
+        let btnFinish = document.createElement("button");
+        btnFinish.innerText = "Finalizar Pedido";
+        btnFinish.classList.add("btnFinishCart");
+        footerCart.appendChild(btnFinish);
+
+        btnFinish.addEventListener("click", function(){
+            alert("Pedido Realizado");
+            divCart.remove();
+            jsonCart = [];
+        })
+    }
 }
 
-function desafios(){
+function selectTam(){
+    let divFather = this.parentNode;
+    for(let i = 0; i < divFather.children.length; i++){
+        if(divFather.children[i].className == "divTam activeTam"){
+            divFather.children[i].classList.remove("activeTam");
+            this.classList.add("activeTam");
+        }else{
+            this.classList.add("activeTam");
+        }
+    }
+    
+}
+
+var jsonCart = [];
+
+function addCart(prod, tam){
+    console.log("this", tam)
+    console.log("jkt", prod)
+
+    let divTams = tam;
+    let tamanhoSelecionado;
+    for(let i = 0; i < divTams.children.length; i++){
+        if(divTams.children[i].className == "divTam activeTam"){
+            tamanhoSelecionado = divTams.children[i].innerText;
+            let prodSelec = {prod: prod, tamSelected: tamanhoSelecionado};
+            jsonCart.push(prodSelec);
+            alert("Produto adicionado ao carrinho!!");
+        }else{
+            console.log("nenhum selecionado"); 
+        }
+    }
+    
+}
+
+/*function desafios(){
     const mainContainer = document.getElementById("mainContainer");
     while(mainContainer.firstChild){
         mainContainer.removeChild(mainContainer.firstChild);
@@ -652,7 +812,8 @@ function desafios(){
     divBtns.appendChild(btnPerso);
     btnPerso.addEventListener("click", personalizar);
 
-    function personalizar(){
+}*/
+/*  function personalizar(){
         const persoExist = document.querySelector(".divPerso");
         if(persoExist){
             persoExist.remove();
@@ -1177,4 +1338,4 @@ function galeria(){
     iArrowRight.addEventListener('click', () => shiftImages(1));
     
     renderImages();
-}
+}*/
